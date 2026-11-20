@@ -47,8 +47,10 @@ describe('CryptNote zero-knowledge vault', () => {
 
     await expect(openEntry(keysB, sealed.ciphertext)).rejects.toThrow(/unreadable/);
 
-    const lastChar = sealed.ciphertext.at(-2) === 'A' ? 'B' : 'A';
-    const tampered = `${sealed.ciphertext.slice(0, -2)}${lastChar}${sealed.ciphertext.at(-1)}`;
+    // Flip a real bit in the decoded ciphertext/tag bytes (never the unused base64 padding bits).
+    const raw = Uint8Array.from(atob(sealed.ciphertext), ch => ch.charCodeAt(0));
+    raw[raw.length - 1] = (raw[raw.length - 1] ?? 0) ^ 0x01;
+    const tampered = btoa(String.fromCharCode(...raw));
     await expect(openEntry(keysA, tampered)).rejects.toThrow(/unreadable|malformed/);
   });
 
