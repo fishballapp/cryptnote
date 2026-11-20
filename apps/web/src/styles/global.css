@@ -1,0 +1,257 @@
+@import "tailwindcss";
+@import "@fontsource-variable/schibsted-grotesk";
+@import "@fontsource-variable/geist-mono";
+
+/*
+ * Cipher Folio — CryptNote design tokens.
+ *
+ * Every color lives in one light-dark() custom property on :root so components never need `dark:`
+ * variants. The scheme follows the OS by default and honors `<meta name="color-scheme">` overrides
+ * set by `/theme-init.js` and the header toggle.
+ */
+:root {
+  color-scheme: light dark;
+
+  &:has(> head > meta[name="color-scheme"][content="light"]) {
+    color-scheme: light;
+  }
+
+  &:has(> head > meta[name="color-scheme"][content="dark"]) {
+    color-scheme: dark;
+  }
+
+  /* Surfaces: warm archival paper in light; quiet graphite-obsidian in dark */
+  --background: light-dark(oklch(0.978 0.005 85), oklch(0.162 0.009 252));
+  --surface: light-dark(oklch(0.996 0.002 85), oklch(0.202 0.01 252));
+  --surface-sunken: light-dark(oklch(0.952 0.007 85), oklch(0.14 0.008 252));
+  --surface-raised: light-dark(oklch(1 0 0), oklch(0.238 0.011 252));
+
+  /* Borders */
+  --border: light-dark(oklch(0.892 0.008 82), oklch(0.295 0.011 252));
+  --border-strong: light-dark(oklch(0.805 0.011 82), oklch(0.385 0.013 252));
+
+  /* Ink */
+  --foreground: light-dark(oklch(0.215 0.013 250), oklch(0.938 0.007 85));
+  --muted: light-dark(oklch(0.475 0.012 250), oklch(0.69 0.011 250));
+  --subtle: light-dark(oklch(0.59 0.01 250), oklch(0.54 0.01 250));
+
+  /* Brand accent: deep mineral teal */
+  --accent: light-dark(oklch(0.47 0.098 186), oklch(0.715 0.112 186));
+  --accent-foreground: light-dark(oklch(0.99 0.004 186), oklch(0.16 0.015 190));
+  --accent-soft: light-dark(oklch(0.935 0.028 184), oklch(0.265 0.036 186));
+
+  /* Semantic status tones */
+  --success: light-dark(oklch(0.48 0.108 156), oklch(0.72 0.115 156));
+  --success-soft: light-dark(oklch(0.94 0.03 156), oklch(0.25 0.038 156));
+  --warning: light-dark(oklch(0.56 0.14 70), oklch(0.78 0.13 78));
+  --warning-soft: light-dark(oklch(0.955 0.038 80), oklch(0.27 0.044 74));
+  --danger: light-dark(oklch(0.53 0.165 26), oklch(0.68 0.155 28));
+  --danger-soft: light-dark(oklch(0.95 0.03 26), oklch(0.26 0.05 26));
+  --danger-foreground: light-dark(oklch(0.99 0.005 26), oklch(0.16 0.015 26));
+
+  --overlay: light-dark(oklch(0.2 0.012 250 / 0.42), oklch(0.08 0.01 252 / 0.68));
+  --shadow-float: light-dark(
+    0 2px 6px oklch(0.2 0.012 250 / 0.06),
+    0 12px 28px -8px oklch(0.2 0.012 250 / 0.14),
+    0 2px 6px oklch(0 0 0 / 0.35),
+    0 14px 32px -8px oklch(0 0 0 / 0.6)
+  );
+
+  /* Syntax highlighting tokens (WCAG AA on --surface in both schemes, painted via ::highlight()) */
+  --syntax-comment: light-dark(oklch(0.51 0.014 250), oklch(0.64 0.014 250));
+  --syntax-keyword: light-dark(oklch(0.51 0.175 20), oklch(0.75 0.145 22));
+  --syntax-operator: light-dark(oklch(0.42 0.02 250), oklch(0.78 0.015 250));
+  --syntax-string: light-dark(oklch(0.44 0.105 178), oklch(0.77 0.115 175));
+  --syntax-constant: light-dark(oklch(0.47 0.155 256), oklch(0.76 0.135 248));
+  --syntax-function: light-dark(oklch(0.48 0.165 298), oklch(0.78 0.135 298));
+  --syntax-type: light-dark(oklch(0.46 0.115 206), oklch(0.76 0.115 204));
+  --syntax-variable: light-dark(oklch(0.52 0.145 55), oklch(0.79 0.125 65));
+  --syntax-property: light-dark(oklch(0.47 0.14 245), oklch(0.77 0.12 242));
+  --syntax-tag: light-dark(oklch(0.45 0.125 152), oklch(0.77 0.13 152));
+  --syntax-selector: light-dark(oklch(0.48 0.165 298), oklch(0.78 0.135 298));
+  --syntax-inserted: var(--success);
+  --syntax-deleted: var(--danger);
+}
+
+@theme inline {
+  /* Clear Tailwind's default palette so components stay strictly on semantic tokens. */
+  --color-*: initial;
+
+  --font-sans: "Schibsted Grotesk Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono Variable", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-sunken: var(--surface-sunken);
+  --color-surface-raised: var(--surface-raised);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-subtle: var(--subtle);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent-soft: var(--accent-soft);
+
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-danger-foreground: var(--danger-foreground);
+  --color-overlay: var(--overlay);
+
+  --shadow-float: var(--shadow-float);
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  button:not(:disabled) {
+    cursor: pointer;
+  }
+
+  ::selection {
+    background-color: color-mix(in oklch, var(--accent) 24%, transparent);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  * {
+    scrollbar-color: var(--border-strong) transparent;
+    scrollbar-width: thin;
+  }
+}
+
+/* Align Excalidraw's brand accent with CryptNote's mineral teal token in both light and dark modes. */
+.cryptnote-excalidraw .excalidraw,
+.cryptnote-excalidraw .excalidraw.theme--dark {
+  --color-primary: var(--accent);
+  --color-primary-darker: var(--accent);
+  --color-primary-darkest: var(--accent);
+  --color-primary-light: var(--accent-soft);
+  --color-primary-light-darker: var(--accent-soft);
+  --color-surface-primary-container: var(--accent-soft);
+  --color-on-primary-container: var(--accent);
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+.mono-exact {
+  font-family: var(--font-mono);
+  font-feature-settings: "zero" 1;
+  font-variant-ligatures: none;
+  tab-size: 2;
+}
+
+/* CSS Custom Highlight API token styling populated by microlighter (zero token <span> nodes). */
+::highlight(comment),
+::highlight(quote) {
+  color: var(--syntax-comment);
+}
+
+::highlight(keyword),
+::highlight(storage),
+::highlight(at-rule),
+::highlight(doctype),
+::highlight(important),
+::highlight(section) {
+  color: var(--syntax-keyword);
+}
+
+::highlight(operator),
+::highlight(punctuation) {
+  color: var(--syntax-operator);
+}
+
+::highlight(string),
+::highlight(regexp),
+::highlight(attribute-value),
+::highlight(link),
+::highlight(raw) {
+  color: var(--syntax-string);
+}
+
+::highlight(numeric),
+::highlight(boolean),
+::highlight(constant),
+::highlight(symbol),
+::highlight(character-entity),
+::highlight(anchor),
+::highlight(entity) {
+  color: var(--syntax-constant);
+}
+
+::highlight(function),
+::highlight(decorator),
+::highlight(animation) {
+  color: var(--syntax-function);
+}
+
+::highlight(type),
+::highlight(support) {
+  color: var(--syntax-type);
+}
+
+::highlight(variable),
+::highlight(interpolation) {
+  color: var(--syntax-variable);
+}
+
+::highlight(property),
+::highlight(key),
+::highlight(attribute-name) {
+  color: var(--syntax-property);
+}
+
+::highlight(tag) {
+  color: var(--syntax-tag);
+}
+
+::highlight(selector) {
+  color: var(--syntax-selector);
+}
+
+::highlight(inserted) {
+  color: var(--syntax-inserted);
+}
+
+::highlight(deleted) {
+  color: var(--syntax-deleted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    /* biome-ignore lint/complexity/noImportantStyles: honor reduced-motion across all animations */
+    animation-duration: 0.01ms !important;
+    /* biome-ignore lint/complexity/noImportantStyles: honor reduced-motion across all transitions */
+    transition-duration: 0.01ms !important;
+  }
+}

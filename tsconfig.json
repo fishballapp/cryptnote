@@ -1,0 +1,13 @@
+{
+  "files": [],
+  "references": [
+    { "path": "./packages/crypto" },
+    { "path": "./packages/api" },
+    { "path": "./apps/web" },
+    { "path": "./apps/worker-web" },
+    { "path": "./internal/effect-api" },
+    { "path": "./internal/effect-worker" },
+    { "path": "./internal/vite-plugins" },
+    { "path": "./internal/zk-vault" }
+  ]
+}

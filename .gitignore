@@ -1,0 +1,26 @@
+# node / pnpm
+node_modules
+.pnpm-store
+*.tsbuildinfo
+
+# editor / OS
+.DS_Store
+.idea
+.claude/*
+.agents/*
+
+# secrets / env
+.env
+.env.*
+!.env.schema
+!.env.example
+
+# local-only working files, never committed
+*.local
+*.local.*
+*.local/
+
+# build / scratch / wrangler
+dist
+tmp
+.wrangler

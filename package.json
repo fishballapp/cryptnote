@@ -1,0 +1,28 @@
+{
+  "name": "cryptnote-workspace",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "packageManager": "pnpm@12.4.1",
+  "engines": {
+    "node": ">=26"
+  },
+  "scripts": {
+    "build": "pnpm -r --workspace-concurrency=1 --if-present build",
+    "check": "biome check .",
+    "check:fix": "biome check --write .",
+    "check:effect": "pnpm -r --if-present check:effect",
+    "typecheck": "tsc -b",
+    "test": "pnpm -r test",
+    "repojj:check": "repojj check",
+    "repojj:check:fix": "repojj check --fix",
+    "repojj:postfix": "biome check --write ."
+  },
+  "devDependencies": {
+    "@biomejs/biome": "catalog:",
+    "@effect/tsgo": "catalog:",
+    "repojj": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

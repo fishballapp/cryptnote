@@ -1,0 +1,17 @@
+# Every page and asset on cryptnote.fsh.ba. scripts/assemble-assets.ts copies this into dist/.
+# Strict script-src 'self' (theme bootstrap runs from /theme-init.js, never inline); blob: workers
+# support the client-side PoW solver Web Worker.
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' data: blob:; worker-src 'self' blob:; frame-ancestors 'none'; base-uri 'none'; form-action 'self'
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: no-referrer
+  Cross-Origin-Opener-Policy: same-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+
+# Fingerprinted Vite chunks and self-hosted Excalidraw fonts can be cached for a year; HTML keeps the default so deploys show at once.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/excalidraw-assets/*
+  Cache-Control: public, max-age=31536000, immutable

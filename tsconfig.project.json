@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "composite": true,
+    // Relative imports carry `.ts`, matching `@internal/zk-vault` and Node's native type stripping.
+    "allowImportingTsExtensions": true,
+    "tsBuildInfoFile": "node_modules/.tmp/tsconfig.project.tsbuildinfo"
+  }
+}

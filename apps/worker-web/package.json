@@ -1,0 +1,32 @@
+{
+  "name": "@cryptnote/worker-web",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "description": "CryptNote's single Cloudflare Worker (cryptnote-web): serves the SPA static assets and the /api/v1 encrypted storage API backed by D1.",
+  "scripts": {
+    "dev": "node scripts/assemble-assets.ts --allow-missing && wrangler d1 migrations apply cryptnote --local && wrangler dev --port ${CRYPTNOTE_WORKER_PORT:-8792} --inspector-port ${CRYPTNOTE_WORKER_INSPECTOR_PORT:-9243}",
+    "build": "pnpm -F @cryptnote/web build && node scripts/assemble-assets.ts",
+    "deploy": "varlock run -- node scripts/deploy-worker.ts",
+    "cf-typegen": "wrangler types",
+    "test": "vitest run",
+    "check:effect": "effect-tsgo diagnostics --project tsconfig.wrangler.json --format text"
+  },
+  "dependencies": {
+    "@cryptnote/api": "workspace:*",
+    "@cryptnote/crypto": "workspace:*",
+    "@effect/sql-d1": "catalog:",
+    "@internal/effect-worker": "workspace:*",
+    "effect": "catalog:"
+  },
+  "devDependencies": {
+    "@baymutt/varlock-plugin": "catalog:",
+    "@effect/vitest": "catalog:",
+    "@internal/effect-api": "workspace:*",
+    "@types/node": "catalog:",
+    "varlock": "catalog:",
+    "vitest": "catalog:",
+    "wrangler": "catalog:"
+  }
+}

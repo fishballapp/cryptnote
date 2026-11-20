@@ -1,0 +1,58 @@
+{
+  "$schema": "../../../../node_modules/wrangler/config-schema.json",
+  "name": "cryptnote-web",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-09-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "account_id": "ef1db00eff7bafcb12e7acb5754d1377",
+  "dev": { "port": 8792, "inspector_port": 9243 },
+  // dist/ is the Vite SPA (@cryptnote/web) and this package's _headers, put together by
+  // scripts/assemble-assets.ts. Only /api/* invokes the Worker; every other path is served as a
+  // static asset with single-page-application fallback to index.html.
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/api/*"]
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "cryptnote",
+      "database_id": "d74462ed-9b1c-452f-99d9-5cb10cc92af4",
+      "migrations_dir": "migrations"
+    }
+  ],
+  // Per client IP (normalized to /64 for IPv6 in src/platform/rate-limits.ts). Each namespace_id
+  // is unique across the Fishball Cloudflare account.
+  "ratelimits": [
+    {
+      "name": "WRITE_LIMIT",
+      "namespace_id": "2002",
+      "simple": { "limit": 60, "period": 60 }
+    },
+    {
+      "name": "CHALLENGE_LIMIT",
+      "namespace_id": "2003",
+      "simple": { "limit": 90, "period": 60 }
+    },
+    {
+      "name": "READ_LIMIT",
+      "namespace_id": "2004",
+      "simple": { "limit": 180, "period": 60 }
+    },
+    {
+      "name": "CREATE_LIMIT",
+      "namespace_id": "2005",
+      "simple": { "limit": 10, "period": 60 }
+    }
+  ],
+  // Hourly sweep of expired PoW challenges and old sliding-window write events.
+  "triggers": { "crons": ["17 * * * *"] },
+  // Domain cryptnote.fsh.ba is passed at deploy (`--domains` in scripts/deploy-worker.ts), not as
+  // a route here, so `wrangler dev` answers local requests on localhost.
+  "workers_dev": false,
+  "preview_urls": false,
+  // Workers Logs keep structured error logs only; invocation logs stay off so no visitor IP or
+  // entry lookup ID is retained in platform telemetry.
+  "observability": { "enabled": true, "logs": { "invocation_logs": false } }
+}

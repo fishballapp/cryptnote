@@ -1,0 +1,38 @@
+name: CD
+
+# Every push to main runs every gate (ci.yml), then deploys cryptnote.fsh.ba.
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  gates:
+    name: Gates
+    uses: ./.github/workflows/ci.yml
+
+  # Builds the SPA, loads the deploy token from baymutt via varlock, applies D1 migrations,
+  # and deploys the Worker (apps/worker-web).
+  deploy:
+    name: Deploy cryptnote.fsh.ba
+    needs: gates
+    runs-on: ubuntu-latest
+    environment: production
+    timeout-minutes: 15
+    concurrency:
+      group: deploy
+      cancel-in-progress: false
+    env:
+      BAYMUTT_KEY: ${{ secrets.BAYMUTT_KEY }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 26
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Build, apply D1 migrations, deploy the Worker
+        run: pnpm -F @cryptnote/worker-web run deploy

@@ -1,0 +1,49 @@
+{
+  "name": "@cryptnote/web",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "description": "CryptNote SPA: zero-knowledge multi-tab encrypted notepad built with Vite, React 19, TanStack Router, Base UI, Tailwind v4, and Effect atoms.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "test": "vitest run",
+    "check:effect": "effect-tsgo diagnostics --project tsconfig.app.json --format text"
+  },
+  "dependencies": {
+    "@base-ui/react": "catalog:",
+    "@cryptnote/api": "workspace:*",
+    "@cryptnote/crypto": "workspace:*",
+    "@effect/atom-react": "catalog:",
+    "@excalidraw/excalidraw": "catalog:",
+    "@fontsource-variable/geist-mono": "catalog:",
+    "@fontsource-variable/schibsted-grotesk": "catalog:",
+    "@phosphor-icons/react": "catalog:",
+    "@tanstack/react-router": "catalog:",
+    "class-variance-authority": "catalog:",
+    "cn": "catalog:",
+    "effect": "catalog:",
+    "microlighter": "catalog:",
+    "react": "catalog:web",
+    "react-dom": "catalog:web",
+    "temporal-polyfill": "catalog:",
+    "zustand": "catalog:"
+  },
+  "devDependencies": {
+    "@internal/vite-plugins": "workspace:*",
+    "@tailwindcss/vite": "catalog:",
+    "@tanstack/router-plugin": "catalog:",
+    "@testing-library/dom": "catalog:",
+    "@testing-library/react": "catalog:",
+    "@testing-library/user-event": "catalog:",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:web",
+    "@types/react-dom": "catalog:web",
+    "@vitejs/plugin-react": "catalog:",
+    "jsdom": "catalog:",
+    "tailwindcss": "catalog:",
+    "vite": "catalog:",
+    "vitest": "catalog:"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "name": "@cryptnote/crypto",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "description": "Zero-knowledge client-side cryptography, multi-tab entry schemas, and adaptive Proof-of-Work primitives for CryptNote.",
+  "exports": {
+    ".": "./src/index.ts",
+    "./constants": "./src/constants.ts",
+    "./document": "./src/document.ts",
+    "./pow": "./src/pow.ts",
+    "./sha256": "./src/sha256.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "check:effect": "effect-tsgo diagnostics --project tsconfig.json --format text"
+  },
+  "dependencies": {
+    "@internal/zk-vault": "workspace:*",
+    "effect": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "vitest": "catalog:"
+  }
+}
